@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>前端并发冲突解决方案—— axios 拦截器应用篇 | Shopee 供应链技术博客</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="Share Our Knowledge.">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="preload" href="/assets/css/0.styles.65389751.css" as="style"><link rel="preload" href="/assets/js/app.89d7a7af.js" as="script"><link rel="preload" href="/assets/js/3.39c0dfdf.js" as="script"><link rel="preload" href="/assets/js/1.fc4f2573.js" as="script"><link rel="preload" href="/assets/js/26.90da6739.js" as="script"><link rel="prefetch" href="/assets/js/10.8f886ff6.js"><link rel="prefetch" href="/assets/js/11.42709e7b.js"><link rel="prefetch" href="/assets/js/12.51c95e33.js"><link rel="prefetch" href="/assets/js/13.a7db2e06.js"><link rel="prefetch" href="/assets/js/14.b9fd5312.js"><link rel="prefetch" href="/assets/js/15.02f2a353.js"><link rel="prefetch" href="/assets/js/16.f2b3bba4.js"><link rel="prefetch" href="/assets/js/17.fa6f4a21.js"><link rel="prefetch" href="/assets/js/18.cc202cb1.js"><link rel="prefetch" href="/assets/js/19.b74d740a.js"><link rel="prefetch" href="/assets/js/20.4f1350b1.js"><link rel="prefetch" href="/assets/js/21.7011a4c9.js"><link rel="prefetch" href="/assets/js/22.71907870.js"><link rel="prefetch" href="/assets/js/23.7ea72b1e.js"><link rel="prefetch" href="/assets/js/24.156af4ed.js"><link rel="prefetch" href="/assets/js/25.705d13d1.js"><link rel="prefetch" href="/assets/js/27.a1d9dc04.js"><link rel="prefetch" href="/assets/js/28.7b9ee58e.js"><link rel="prefetch" href="/assets/js/29.c14786fa.js"><link rel="prefetch" href="/assets/js/30.cc235e35.js"><link rel="prefetch" href="/assets/js/4.d90b791b.js"><link rel="prefetch" href="/assets/js/5.16307cd7.js"><link rel="prefetch" href="/assets/js/6.3a371881.js"><link rel="prefetch" href="/assets/js/7.40292f84.js"><link rel="prefetch" href="/assets/js/8.651698aa.js"><link rel="prefetch" href="/assets/js/9.fdd84905.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.65389751.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-19557b78><div data-v-19557b78><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-19557b78 data-v-19557b78><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-64685f0e data-v-19557b78 data-v-19557b78><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>Shopee 供应链技术博客</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>Shopee Supply Chain</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div class="hide" data-v-19557b78><header class="navbar" data-v-19557b78><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/shopee.png" alt="Shopee 供应链技术博客" class="logo"> <span class="site-name">Shopee 供应链技术博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/database/" class="nav-link"><i class="iconfont undefined"></i>
+  database
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CompilerTheory,Golang/" class="nav-link"><i class="iconfont undefined"></i>
+  CompilerTheory,Golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MVCC/" class="nav-link"><i class="iconfont undefined"></i>
+  MVCC
+</a></li><li class="dropdown-item"><!----> <a href="/categories/golang/" class="nav-link"><i class="iconfont undefined"></i>
+  golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spark/" class="nav-link"><i class="iconfont undefined"></i>
+  Spark
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CSS/" class="nav-link"><i class="iconfont undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/categories/efficiency/" class="nav-link"><i class="iconfont undefined"></i>
+  efficiency
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Performance/" class="nav-link"><i class="iconfont undefined"></i>
+  Performance
+</a></li><li class="dropdown-item"><!----> <a href="/categories/http/" class="nav-link"><i class="iconfont undefined"></i>
+  http
+</a></li><li class="dropdown-item"><!----> <a href="/categories/react/" class="nav-link"><i class="iconfont undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Middleware/" class="nav-link"><i class="iconfont undefined"></i>
+  Middleware
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Security/" class="nav-link"><i class="iconfont undefined"></i>
+  Security
+</a></li><li class="dropdown-item"><!----> <a href="/categories/git/" class="nav-link"><i class="iconfont undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Algorithm/" class="nav-link"><i class="iconfont undefined"></i>
+  Algorithm
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-19557b78></div> <aside class="sidebar" data-v-19557b78><div class="personal-info-wrapper" data-v-b038cec6><img src="/shopee.png" alt="author-avatar" class="personal-img" data-v-b038cec6> <h3 class="name" data-v-b038cec6>
+    Shopee Supply Chain
+  </h3> <div class="num" data-v-b038cec6><div data-v-b038cec6><h3 data-v-b038cec6>17</h3> <h6 data-v-b038cec6>Article</h6></div> <div data-v-b038cec6><h3 data-v-b038cec6>17</h3> <h6 data-v-b038cec6>Tag</h6></div></div> <hr data-v-b038cec6></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/database/" class="nav-link"><i class="iconfont undefined"></i>
+  database
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CompilerTheory,Golang/" class="nav-link"><i class="iconfont undefined"></i>
+  CompilerTheory,Golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MVCC/" class="nav-link"><i class="iconfont undefined"></i>
+  MVCC
+</a></li><li class="dropdown-item"><!----> <a href="/categories/golang/" class="nav-link"><i class="iconfont undefined"></i>
+  golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spark/" class="nav-link"><i class="iconfont undefined"></i>
+  Spark
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CSS/" class="nav-link"><i class="iconfont undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/categories/efficiency/" class="nav-link"><i class="iconfont undefined"></i>
+  efficiency
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Performance/" class="nav-link"><i class="iconfont undefined"></i>
+  Performance
+</a></li><li class="dropdown-item"><!----> <a href="/categories/http/" class="nav-link"><i class="iconfont undefined"></i>
+  http
+</a></li><li class="dropdown-item"><!----> <a href="/categories/react/" class="nav-link"><i class="iconfont undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Middleware/" class="nav-link"><i class="iconfont undefined"></i>
+  Middleware
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Security/" class="nav-link"><i class="iconfont undefined"></i>
+  Security
+</a></li><li class="dropdown-item"><!----> <a href="/categories/git/" class="nav-link"><i class="iconfont undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Algorithm/" class="nav-link"><i class="iconfont undefined"></i>
+  Algorithm
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>前端并发冲突解决方案—— axios 拦截器应用篇</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/views/fe/http/img/axios_interceptors_applications.html#背景" class="sidebar-link">背景</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/views/fe/http/img/axios_interceptors_applications.html#更优的解决方案：-axios-拦截器统一处理" class="sidebar-link">更优的解决方案： axios 拦截器统一处理</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/views/fe/http/img/axios_interceptors_applications.html#具体实现" class="sidebar-link">具体实现</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/views/fe/http/img/axios_interceptors_applications.html#功能扩展" class="sidebar-link">功能扩展</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/views/fe/http/img/axios_interceptors_applications.html#总结" class="sidebar-link">总结</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-64685f0e data-v-19557b78><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>前端并发冲突解决方案—— axios 拦截器应用篇</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>Shopee Supply Chain</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div data-v-19557b78><main class="page"><div class="page-title" style="display:none;"><h1>前端并发冲突解决方案—— axios 拦截器应用篇</h1> <hr> <div data-v-484a899e><i class="iconfont reco-account" data-v-484a899e><span data-v-484a899e>xian.li</span></i> <i class="iconfont reco-date" data-v-484a899e><span data-v-484a899e>2020-12-18</span></i> <!----> <i class="iconfont reco-tag tags" data-v-484a899e><span class="tag-item" data-v-484a899e>
+      axios
+    </span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h2 id="背景"><a href="#背景" class="header-anchor">#</a> 背景</h2> <ol><li>业务上常见的问题——并发冲突</li></ol> <p>并发冲突问题是互联网项目常遇的坑点，不同用户在较短时间间隔内变更数据，或者某一个用户进行的重复提交操作都可能是导致并发冲突的原因，并发场景在开发和测试阶段难以排查全面，出现线上 bug 以后定位困难，因此做好并发控制是前后端开发过程中都需要重视的问题。</p> <p>对于同一用户短时间内重复提交数据的问题，前端通常可以先做一层拦截。本文将讨论前端如何利用 axios 的拦截器过滤重复请求，解决并发冲突。</p> <ol><li>当前的处理方式——每次发请求添加 loading</li></ol> <p>在尝试 axios 拦截器之前，先看看我们之前业务是怎么处理并发冲突问题的：每次用户操作页面上的控件（输入框、按钮等），向后端发送请求的时候，都给页面对应的控件添加 loading 效果，提示正在进行数据加载，同时也阻止 loading 效果结束前用户继续操作控件。</p> <p>这是最直接有效的方式，如果你们前端团队成员足够细心耐心，拥有良好的编码习惯，这样就可以解决大部分用户不小心重复提交带来的并发问题了。</p> <h2 id="更优的解决方案：-axios-拦截器统一处理"><a href="#更优的解决方案：-axios-拦截器统一处理" class="header-anchor">#</a> 更优的解决方案： axios 拦截器统一处理</h2> <p>项目中需要前端限制并发的场景这么多，我们当然要思考更优更省事的方案。既然是在每次发送请求的时候进行并发控制，那如果能重新封装下发请求的公共函数，统一处理重复请求实现自动拦截，就可以大大简化我们的业务代码。</p> <p>项目使用的 <a href="https://www.npmjs.com/package/axios" target="_blank" rel="noopener noreferrer"><code>axios</code><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> 库来发送 <code>http</code> 请求，<code>axios</code> 官方为我们提供了丰富的 API，我们来看看拦截请求需要用到的两个核心 API:</p> <ol><li><p><code>interceptors</code>:</p> <p>拦截器包括请求拦截器和响应拦截器，可以在请求发送前或者响应后进行拦截处理，用法如下：</p></li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 添加请求拦截器
+axios.interceptors.request.use(function (config) {
+  // 在发送请求之前做些什么
+  return config;
+}, function (error) {
+  // 对请求错误做些什么
+  return Promise.reject(error);
+});
+
+// 添加响应拦截器
+axios.interceptors.response.use(function (response) {
+    // 对响应数据做点什么
+    return response;
+  }, function (error) {
+    // 对响应错误做点什么
+    return Promise.reject(error);
+  });
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br></div></div><ol start="2"><li><p><code>cancel token</code>:</p> <p>调用 <code>cancel token API</code> 可以取消请求。官网提供了两种方式来构建 <code>cancel token</code>，我们采用这种方式：通过传递一个 <code>executor</code> 函数到 <code>CancelToken</code> 的构造函数来创建 <code>cancel token</code>，方便在上面的请求拦截器中检测到重复请求可以立即执行:</p></li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>const CancelToken = axios.CancelToken;
+let cancel;
+
+axios.get('/user/12345', {
+  cancelToken: new CancelToken(function executor(c) {
+    // executor 函数接收一个 cancel 函数作为参数
+    cancel = c;
+  })
+});
+
+// cancel the request
+cancel();
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p><strong>本文提供的思路就是利用 <code>axios interceptors API</code> 拦截请求，检测是否有多个相同的请求同时处于 pending 状态，如果有就调用 <code>cancel token API</code> 取消重复的请求。</strong></p> <p>假如用户重复点击按钮，先后提交了 A 和 B 这两个完全相同（考虑请求路径、方法、参数）的请求，我们可以从以下几种拦截方案中选择其一：</p> <ul><li>取消 A 请求，只发出 B 请求</li> <li>取消 B 请求，只发出 A 请求</li> <li>取消 B 请求，只发出 A 请求，把收到的 A 请求的返回结果也作为 B 请求的返回结果</li></ul> <p>第三种方案需要做监听处理增加了复杂性，结合我们实际的业务需求，最后采用了第二种方案来实现，即：</p> <p><strong>只发第一个请求。在 A 请求还处于 pending 状态时，后发的所有与 A 重复的请求都取消，实际只发出 A 请求，直到 A 请求结束（成功/失败）才停止对这个请求的拦截。</strong></p> <h2 id="具体实现"><a href="#具体实现" class="header-anchor">#</a> 具体实现</h2> <ol><li><p>存储所有 pending 状态的请求</p> <p>首先我们要将项目中所有的 pending 状态的请求存储在一个变量中，叫它 <code>pendingRequests</code>，</p> <p>可以通过把 <code>axios</code> 封装为一个单例模式的类，或者定义全局变量，来保证 <code>pendingRequests</code> 变量在每次发送请求前都可以访问，并检查是否为重复的请求。</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>let pendingRequests = new Map()
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>把每个请求的方法、url 和参数组合成一个字符串，作为标识该请求的唯一 key，同时也是 <code>pendingRequests</code> 对象的 key:</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>const requestKey = `${config.url}/${JSON.stringify(config.params)}/${JSON.stringify(config.data)}&amp;request_type=${config.method}`;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>帮助理解的小 tips:</p> <ul><li>定义 <code>pendingRequests</code> 为 map 对象的目的是为了方便我们查询它是否包含某个 key，以及添加和删除 key。添加 key 时，对应的 value 可以设置用户自定义的一些功能参数，后面扩展功能的时候会用到。</li> <li><code>config</code> 是 <code>axios</code> 拦截器中的参数，包含当前请求的信息</li></ul></li> <li><p>在请求发出前检查当前请求是否重复</p> <p>在请求拦截器中，生成上面的 <code>requestKey</code>，检查 <code>pendingRequests</code> 对象中是否包含当前请求的 <code>requestKey</code></p> <ul><li>有：说明是重复的请求，cancel 掉当前请求</li> <li>没有：把 <code>requestKey</code> 添加到 <code>pendingRequests</code> 对象中</li></ul> <p>因为后面的响应拦截器中还要用到当前请求的 <code>requestKey</code>，为了避免踩坑，最好不要再次生成，在这一步就把 <code>requestKey</code> 存回 <code>axios</code> 拦截器的 <code>config</code> 参数中，后面可以直接在响应拦截器中通过 <code>response.config.requestKey</code> 取到。</p> <p>代码示例：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 请求拦截器
+axios.interceptors.request.use(
+  (config) =&gt; {
+    if (pendingRequests.has(requestKey)) {
+      config.cancelToken = new axios.CancelToken((cancel) =&gt; {
+        // cancel 函数的参数会作为 promise 的 error 被捕获
+        cancel(`重复的请求被主动拦截: ${requestKey}`);
+      });
+    } else {
+      pendingRequests.set(requestKey, config);
+      config.requestKey = requestKey;
+    }
+    return config;
+  },
+  (error) =&gt; {
+    // 这里出现错误可能是网络波动造成的，清空 pendingRequests 对象
+    pendingRequests.clear();
+    return Promise.reject(error);
+  }
+);
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br></div></div></li> <li><p>在请求返回后维护 <code>pendingRequests</code> 对象</p> <p>如果请求顺利走到了响应拦截器这一步，说明这个请求已经结束了 pending 状态，那我们要把它从 <code>pendingRequests</code> 中除名：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>axios.interceptors.response.use((response) =&gt; {
+  const requestKey = response.config.requestKey;
+  pendingRequests.delete(requestKey);
+  return Promise.resolve(response);
+}, (error) =&gt; {
+  if (axios.isCancel(error)) {
+    console.warn(error);
+    return Promise.reject(error);
+  }
+  pendingRequests.clear();
+  return Promise.reject(error);
+})
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div></li> <li><p>需要清空 <code>pendingRequests</code> 对象的场景</p> <p>遇到网络波动或者超时等情况造成请求错误时，需要清空原来存储的所有 pending 状态的请求记录，在上面演示的代码已经作了注释说明。</p> <p>此外，页面切换时也需要清空之前缓存的 <code>pendingRequests</code> 对象，可以利用 <code>Vue Router</code> 的 <code>beforeEach</code> 钩子：</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>router.beforeEach((to, from, next) =&gt; {
+  request.clearRequestList();
+  next();
+});
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div></li></ol> <h2 id="功能扩展"><a href="#功能扩展" class="header-anchor">#</a> 功能扩展</h2> <ol><li><p>统一处理接口报错提示</p> <p>与后端约定好接口返回数据的格式，对接口报错的情况，可以统一在响应拦截器中添加 toast 给用户提示，</p> <p>对于特殊的不需要报错的接口，可以设置一个参数存入 <code>axios</code> 拦截器的 <code>config</code> 参数中，过滤掉报错提示</p></li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 接口返回 retcode 不为 0 时需要报错，请求设置了 noError 为 true 则这个接口不报错 
+if (
+  response.data.retcode &amp;&amp;
+  !response.config.noError
+) {
+  if (response.data.message) {
+    Vue.prototype.$message({
+      showClose: true,
+      message: response.data.message,
+      type: 'error',
+    });
+  }
+  return Promise.reject(response.data);
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br></div></div><ol start="2"><li><p>发送请求时给控件添加 loading 效果</p> <p>上面利用 <code>axios interceptors</code> 过滤重复请求时，可以在控制台抛出信息给开发者提示，在这个基础上如果能给页面上操作的控件添加 loading 效果就会对用户更友好。</p> <p>常见的 ui 组件库都有提供 loading 服务，可以指定页面上需要添加 loading 效果的控件。下面是以 <code>element UI</code> 为例的示例代码：</p></li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>// 给 loadingTarget 对应的控件添加 loading 效果，储存 loadingService 实例
+addLoading(config) {
+  if (!document.querySelector(config.loadingTarget)) return;
+  config.loadingService = Loading.service({
+    target: config.loadingTarget,
+  });
+}
+
+// 调用 loadingService 实例的 close 方法关闭对应元素的 loading 效果
+closeLoading(config) {
+  config.loadingService &amp;&amp; config.loadingService.close();
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>与上面过滤报错方式类似，发请求的时候将元素的 class name 或 id 存入 <code>axios</code> 拦截器的 <code>config</code> 参数中，</p> <p>在请求拦截器中调用 <code>addLoading</code> 方法, 响应拦截器中调用 <code>closeLoading</code> 方法，就可以实现在请求 pending 过程中指定控件（如 button） loading，请求结束后控件自动取消 loading 效果。</p> <ol start="3"><li><p>支持多个拦截器组合使用</p> <p>简单看下 <code>axios interceptors</code> 部分实现源码可以理解，它支持定义多个 <code>interceptors</code>，所以只要我们定义的 <code>interceptors</code> 符合   <code>Promise.then</code> 链式调用的规范，还可以添加更多功能</p></li></ol> <div class="language- line-numbers-mode"><pre class="language-text"><code>this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+  chain.unshift(interceptor.fulfilled, interceptor.rejected);
+});
+
+this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+  chain.push(interceptor.fulfilled, interceptor.rejected);
+});
+
+while (chain.length) {
+  promise = promise.then(chain.shift(), chain.shift());
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <p>并发问题很常见，处理起来又相对繁琐，前端解决并发冲突时，可以利用 axios 拦截器统一处理重复请求，简化业务代码。同时 axios 拦截器支持更多应用，本文提供了部分常用扩展功能的实现，感兴趣的同学可以继续挖掘补充拦截器的其他用法，希望对你有帮助。</p></div> <footer class="page-edit" style="display:none;"><!----> <!----></footer> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-44bd5a18 data-v-44bd5a18><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-44bd5a18><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-44bd5a18></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-44bd5a18></path></svg></div></div></div>
+    <script src="/assets/js/app.89d7a7af.js" defer></script><script src="/assets/js/3.39c0dfdf.js" defer></script><script src="/assets/js/1.fc4f2573.js" defer></script><script src="/assets/js/26.90da6739.js" defer></script>
+  </body>
+</html>

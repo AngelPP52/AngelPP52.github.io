@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>RabbitMQ 高可用实践 | Shopee 供应链技术博客</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="Share Our Knowledge.">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="preload" href="/assets/css/0.styles.65389751.css" as="style"><link rel="preload" href="/assets/js/app.89d7a7af.js" as="script"><link rel="preload" href="/assets/js/3.39c0dfdf.js" as="script"><link rel="preload" href="/assets/js/1.fc4f2573.js" as="script"><link rel="preload" href="/assets/js/29.c14786fa.js" as="script"><link rel="prefetch" href="/assets/js/10.8f886ff6.js"><link rel="prefetch" href="/assets/js/11.42709e7b.js"><link rel="prefetch" href="/assets/js/12.51c95e33.js"><link rel="prefetch" href="/assets/js/13.a7db2e06.js"><link rel="prefetch" href="/assets/js/14.b9fd5312.js"><link rel="prefetch" href="/assets/js/15.02f2a353.js"><link rel="prefetch" href="/assets/js/16.f2b3bba4.js"><link rel="prefetch" href="/assets/js/17.fa6f4a21.js"><link rel="prefetch" href="/assets/js/18.cc202cb1.js"><link rel="prefetch" href="/assets/js/19.b74d740a.js"><link rel="prefetch" href="/assets/js/20.4f1350b1.js"><link rel="prefetch" href="/assets/js/21.7011a4c9.js"><link rel="prefetch" href="/assets/js/22.71907870.js"><link rel="prefetch" href="/assets/js/23.7ea72b1e.js"><link rel="prefetch" href="/assets/js/24.156af4ed.js"><link rel="prefetch" href="/assets/js/25.705d13d1.js"><link rel="prefetch" href="/assets/js/26.90da6739.js"><link rel="prefetch" href="/assets/js/27.a1d9dc04.js"><link rel="prefetch" href="/assets/js/28.7b9ee58e.js"><link rel="prefetch" href="/assets/js/30.cc235e35.js"><link rel="prefetch" href="/assets/js/4.d90b791b.js"><link rel="prefetch" href="/assets/js/5.16307cd7.js"><link rel="prefetch" href="/assets/js/6.3a371881.js"><link rel="prefetch" href="/assets/js/7.40292f84.js"><link rel="prefetch" href="/assets/js/8.651698aa.js"><link rel="prefetch" href="/assets/js/9.fdd84905.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.65389751.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-19557b78><div data-v-19557b78><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-19557b78 data-v-19557b78><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-64685f0e data-v-19557b78 data-v-19557b78><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>Shopee 供应链技术博客</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>Shopee Supply Chain</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div class="hide" data-v-19557b78><header class="navbar" data-v-19557b78><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/shopee.png" alt="Shopee 供应链技术博客" class="logo"> <span class="site-name">Shopee 供应链技术博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/database/" class="nav-link"><i class="iconfont undefined"></i>
+  database
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CompilerTheory,Golang/" class="nav-link"><i class="iconfont undefined"></i>
+  CompilerTheory,Golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MVCC/" class="nav-link"><i class="iconfont undefined"></i>
+  MVCC
+</a></li><li class="dropdown-item"><!----> <a href="/categories/golang/" class="nav-link"><i class="iconfont undefined"></i>
+  golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spark/" class="nav-link"><i class="iconfont undefined"></i>
+  Spark
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CSS/" class="nav-link"><i class="iconfont undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/categories/efficiency/" class="nav-link"><i class="iconfont undefined"></i>
+  efficiency
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Performance/" class="nav-link"><i class="iconfont undefined"></i>
+  Performance
+</a></li><li class="dropdown-item"><!----> <a href="/categories/http/" class="nav-link"><i class="iconfont undefined"></i>
+  http
+</a></li><li class="dropdown-item"><!----> <a href="/categories/react/" class="nav-link"><i class="iconfont undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Middleware/" class="nav-link"><i class="iconfont undefined"></i>
+  Middleware
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Security/" class="nav-link"><i class="iconfont undefined"></i>
+  Security
+</a></li><li class="dropdown-item"><!----> <a href="/categories/git/" class="nav-link"><i class="iconfont undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Algorithm/" class="nav-link"><i class="iconfont undefined"></i>
+  Algorithm
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-19557b78></div> <aside class="sidebar" data-v-19557b78><div class="personal-info-wrapper" data-v-b038cec6><img src="/shopee.png" alt="author-avatar" class="personal-img" data-v-b038cec6> <h3 class="name" data-v-b038cec6>
+    Shopee Supply Chain
+  </h3> <div class="num" data-v-b038cec6><div data-v-b038cec6><h3 data-v-b038cec6>17</h3> <h6 data-v-b038cec6>Article</h6></div> <div data-v-b038cec6><h3 data-v-b038cec6>17</h3> <h6 data-v-b038cec6>Tag</h6></div></div> <hr data-v-b038cec6></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/database/" class="nav-link"><i class="iconfont undefined"></i>
+  database
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CompilerTheory,Golang/" class="nav-link"><i class="iconfont undefined"></i>
+  CompilerTheory,Golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MVCC/" class="nav-link"><i class="iconfont undefined"></i>
+  MVCC
+</a></li><li class="dropdown-item"><!----> <a href="/categories/golang/" class="nav-link"><i class="iconfont undefined"></i>
+  golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spark/" class="nav-link"><i class="iconfont undefined"></i>
+  Spark
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CSS/" class="nav-link"><i class="iconfont undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/categories/efficiency/" class="nav-link"><i class="iconfont undefined"></i>
+  efficiency
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Performance/" class="nav-link"><i class="iconfont undefined"></i>
+  Performance
+</a></li><li class="dropdown-item"><!----> <a href="/categories/http/" class="nav-link"><i class="iconfont undefined"></i>
+  http
+</a></li><li class="dropdown-item"><!----> <a href="/categories/react/" class="nav-link"><i class="iconfont undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Middleware/" class="nav-link"><i class="iconfont undefined"></i>
+  Middleware
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Security/" class="nav-link"><i class="iconfont undefined"></i>
+  Security
+</a></li><li class="dropdown-item"><!----> <a href="/categories/git/" class="nav-link"><i class="iconfont undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Algorithm/" class="nav-link"><i class="iconfont undefined"></i>
+  Algorithm
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>RabbitMQ 高可用实践</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#二、rabbitmq使用遇到的问题" class="sidebar-link">二、RabbitMQ使用遇到的问题</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#集群不可用" class="sidebar-link">集群不可用</a></li><li class="sidebar-sub-header"><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#集群负载过高" class="sidebar-link">集群负载过高</a></li><li class="sidebar-sub-header"><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#消息丢失" class="sidebar-link">消息丢失</a></li><li class="sidebar-sub-header"><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#rabbitmq-or-kafka" class="sidebar-link">RabbitMQ Or Kafka</a></li><li class="sidebar-sub-header"><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#多集群如何管理" class="sidebar-link">多集群如何管理</a></li></ul></li><li><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#三、rabbitmq集群高可用实践" class="sidebar-link">三、RabbitMQ集群高可用实践</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#背景：" class="sidebar-link">背景：</a></li><li class="sidebar-sub-header"><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#rabbitmq高可用架构" class="sidebar-link">RabbitMQ高可用架构</a></li><li class="sidebar-sub-header"><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#mq-server高可用部署实践" class="sidebar-link">MQ-Server高可用部署实践</a></li><li class="sidebar-sub-header"><a href="/views/middle/rabbitmq-ha/202011-rabbitmq-ha.html#目前遇到的问题" class="sidebar-link">目前遇到的问题</a></li></ul></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-64685f0e data-v-19557b78><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>RabbitMQ 高可用实践</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>Shopee Supply Chain</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div data-v-19557b78><main class="page"><div class="page-title" style="display:none;"><h1>RabbitMQ 高可用实践</h1> <hr> <div data-v-484a899e><i class="iconfont reco-account" data-v-484a899e><span data-v-484a899e>曾谢波</span></i> <i class="iconfont reco-date" data-v-484a899e><span data-v-484a899e>2020-12-04</span></i> <!----> <i class="iconfont reco-tag tags" data-v-484a899e><span class="tag-item" data-v-484a899e>
+      Middleware
+    </span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h1 id="一、rabbitmq简介"><a href="#一、rabbitmq简介" class="header-anchor">#</a> 一、RabbitMQ简介</h1> <p><strong>RabbitMQ 是实现了 AMQP 协议的开源消息代理软件，起源于金融系统</strong></p> <ul><li><p><strong>1、RabbitMQ作用</strong></p> <ul><li>异步处理</li> <li>削峰填谷</li> <li>系统解耦</li> <li>消息广播</li></ul></li> <li><p><strong>2、AMQP协议</strong></p></li></ul> <blockquote><p>AMQP 0-9-1的工作过程如下图：消息（message）被发布者（publisher）发送给交换机（exchange），交换机常常被比喻成邮局或者邮箱。
+然后交换机将收到的消息根据路由规则分发给绑定的队列（queue）。最后AMQP代理会将消息投递给订阅了此队列的消费者，或者消费者按照需求自行获取。
+<img src="https://www.rabbitmq.com/img/tutorials/intro/hello-world-example-routing.png" alt="AMQP协议简单模型">
+发布者（publisher）发布消息时可以给消息指定各种消息属性（message meta-data）。有些属性有可能会被消息代理（brokers）使用，
+然而其他的属性则是完全不透明的，它们只能被接收消息的应用所使用。
+从安全角度考虑，网络是不可靠的，接收消息的应用也有可能在处理消息的时候失败。基于此原因，AMQP模块包含了一个消息确认（message acknowledgements）
+的概念：当一个消息从队列中投递给消费者后（consumer），消费者会通知一下消息代理（broker），这个可以是自动的也可以由处理消息的应用的开发者执行。当“消息确认”被启用的时候，消息代理不会完全将消息从队列中删除，直到它收到来自消费者的确认回执（acknowledgement）。
+在某些情况下，例如当一个消息无法被成功路由时，消息或许会被返回给发布者并被丢弃。或者，如果消息代理执行了延期操作，消息会被放入一个所谓的死信队列中。
+此时，消息发布者可以选择某些参数来处理这些特殊情况。
+队列，交换机和绑定统称为AMQP实体（AMQP entities）</p></blockquote> <h2 id="二、rabbitmq使用遇到的问题"><a href="#二、rabbitmq使用遇到的问题" class="header-anchor">#</a> 二、RabbitMQ使用遇到的问题</h2> <h3 id="集群不可用"><a href="#集群不可用" class="header-anchor">#</a> 集群不可用</h3> <ul><li><strong>1、脑裂</strong> <ul><li>原因
+<strong>网络分区或者系统挂起</strong></li></ul> <blockquote><p>当集群中的不同的节点发生交互失败中断(communication interrupted)等，但是又没有节点挂掉这种情况下，
+才是发生了分区。除了网络失败(network failures)原因，操作系统的挂起或者恢复也会导致集群内节点的网络分区。因为发生挂起的节点不会认为自身已经失败或者停止工作，但是集群内的其他节点会这么认为。</p></blockquote> <ul><li>选择策略
+<ul><li><strong>ignore</strong>: 网络分区后需要手动处理，消息可能丢失，适用于网络很可靠的情况，如所有的节点都在一个机架上，连接在同一个交换机上，这个交换机也连接在WAN上，你不需要冒险而关闭部分节点。</li> <li><strong>pause_minority</strong>: 分区少数节点会暂定服务，知道网络联通恢复，适用于网络相对没有那么的可靠。比如你在EC2上建立了三个节点的集群，假设其中一个节点宕了，在这种策略下，剩余的两个节点还可以继续工作，失败的节点可以在恢复之后重新加入集群</li> <li><strong>autoheal</strong>: 少数节点将会自动重启，你的网络非常不可靠，你更关心服务的连续性而不是数据的完整性。适合有两个节点的集群。</li></ul></li></ul> <blockquote><p>一般选择pause_minority策略，保证服务可用性；</p></blockquote></li> <li><strong>2、集群挂了</strong> <ul><li><p>原因
+<strong>断电了或者物理原因等</strong></p></li> <li><p>选择策略</p> <ul><li>双活或多活部署集群，如果只是少部分节点挂了，整个集群还可用，但是如果整个集群挂了那就只能将流量切换到多活机房，并且要保证流量不会打垮切换到的集群；</li></ul></li></ul></li></ul> <h3 id="集群负载过高"><a href="#集群负载过高" class="header-anchor">#</a> 集群负载过高</h3> <ul><li>内存消耗过多
+<ul><li>普通队列</li></ul> <blockquote><p>默认情况下，当生产者将消息发送到RabbitMQ的时候，队列中的消息会尽可能的存储在内存之中，这样可以更加快速的将消息发送给消费者。即使是持久化的消息，在被写入磁盘的同时也会在内存中驻留一份备份。当RabbitMQ需要释放内存的时候，会将内存中的消息换页至磁盘中，这个操作会耗费较长的时间，也会阻塞队列的操作，进而无法接收新的消息。</p></blockquote> <ul><li>惰性(lazy)队列</li></ul> <blockquote><p>惰性队列会将接收到的消息直接存入文件系统中，而不管是持久化的或者是非持久化的，这样可以减少了内存的消耗，但是会增加I/O的使用，如果消息是持久化的，那么这样的I/O操作不可避免，惰性队列和持久化消息可谓是“最佳拍档”。注意如果惰性队列中存储的是非持久化的消息，内存的使用率会一直很稳定，但是重启之后消息一样会丢失</p></blockquote> <ul><li>惰性队列好处</li></ul> <blockquote><p>据官网测试数据显示，对于普通队列，如果要发送1千万条消息，需要耗费801秒，平均发送速度约为13000条/秒。如果使用惰性队列，那么发送同样多的消息时，耗时是421秒，平均发送速度约为24000条/秒。
+出现性能偏差的原因是普通队列会由于内存不足而不得不将消息换页至磁盘。如果有消费者消费时，惰性队列会耗费将近40MB的空间来发送消息，对于一个消费者的情况，平均的消费速度约为14000条/秒。
+同时，内存消耗大大减少。官网测试显示一百万条消息，普通队列占用257MB内存，惰性队列只需159 KB内存；</p></blockquote></li> <li>Tps过高、连接数过多、队列数过多
+<ul><li>解决方案
+<strong>如何解决呢？</strong></li></ul></li></ul> <h3 id="消息丢失"><a href="#消息丢失" class="header-anchor">#</a> 消息丢失</h3> <ul><li><strong>1、反查表+重试任务+消息队列</strong> <img src="202011-rabbitmq-ha/rabbitmq-practice.png" alt="反查表+重试任务+消息队列"></li></ul> <h3 id="rabbitmq-or-kafka"><a href="#rabbitmq-or-kafka" class="header-anchor">#</a> RabbitMQ Or Kafka</h3> <ul><li><p>1、实现区别</p> <ul><li>RabbitMQ存储基于队列与交换机，Kafka的存储层使用分区事务日志</li></ul></li> <li><p>2、RabbitMQ可以设置TTL、发送延迟消息</p></li> <li><p>3、Kafka可以在一定时间内保存消息</p></li> <li><p>4、容错机制</p> <ul><li>RabbitMQ提供死信交换器（DLX）来处理消息处理故障，不会阻塞后续消息处理</li> <li>Kafka消息顺序不能改变，需要应用层做处理重试消息</li></ul></li> <li><p>5、伸缩能力</p> <ul><li>Kafka横向扩展能力优于RabbitMQ，大规模部署通常每秒可以处理数十万条消息，甚至每秒百万级别的消息</li> <li>RabbitMQ不将消息负载到不同集群处理能力每秒几万左右，但是通过消息负载到不同队列，三十个节点可以达到每秒百万级别：<a href="https://tanzu.vmware.com/content/blog/rabbitmq-hits-one-million-messages-per-second-on-google-compute-engine" target="_blank" rel="noopener noreferrer">基准测试链接<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></li> <li><p>根据业务属性选择使用哪种中间件，更重要的是开发运维熟悉哪种中间件，出了问题是否能得到及时响应解决</p></li></ul> <h3 id="多集群如何管理"><a href="#多集群如何管理" class="header-anchor">#</a> 多集群如何管理</h3> <ul><li>提供统一的集群管理平台</li></ul> <h2 id="三、rabbitmq集群高可用实践"><a href="#三、rabbitmq集群高可用实践" class="header-anchor">#</a> 三、RabbitMQ集群高可用实践</h2> <h3 id="背景："><a href="#背景：" class="header-anchor">#</a> 背景：</h3> <ul><li>1、所有业务共用一个集群，随意接入集群，创建队列；</li> <li>2、集群负载严重，很难维护生产消费接入方的关系信息，集群经常不可用；</li> <li>3、达到单集群性能瓶颈，集群直接不可用；</li></ul> <h3 id="rabbitmq高可用架构"><a href="#rabbitmq高可用架构" class="header-anchor">#</a> RabbitMQ高可用架构</h3> <p><img src="202011-rabbitmq-ha/RabbitMQ-ha.png" alt="RabbitMQ高可用架构"></p> <ul><li>1、MQ-Portal--用于支持应用使用申请</li> <li>2、客户端SDK能力</li></ul> <blockquote><p>a、应用使用鉴权
+b、集群寻址
+c、客户端限流
+d、生产消费重置
+e、阻塞转移
+f、多集群调度</p></blockquote> <ul><li>3、MQ-NameServer
+MQ-NameServer为无状态服务，通过集群部署即可保障自身高可用，主要用于解决以下问题：</li></ul> <blockquote><p>a、MQ-SDK启动鉴权以及应用使用集群定位。
+b、处理MQ-SDK的定时指标上报（消息发送数量、消息消费数量），并且返回当前可用集群地址，确保SDK在集群异常时按照正确地址进行重连。
+c、控制MQ-SDK进行生产消费重置。</p></blockquote> <h3 id="mq-server高可用部署实践"><a href="#mq-server高可用部署实践" class="header-anchor">#</a> MQ-Server高可用部署实践</h3> <p><img src="202011-rabbitmq-ha/MQ-Server-ha.png" alt="MQ-Server高可用部署实践">
+RabbitMQ 集群均采用同城双活部署架构，通过Federation插件将双集群组成联盟集群，依靠MQ-SDK和MQ-NameServer提供的集群寻址、故障快速切换等能力保障集群的可用性。</p> <ul><li>1、集群基本配置
+<ul><li>一般使用3到7个奇数节点部署RabbitMQ集群；</li> <li>集群队列均为镜像队列，确保消息存在备份，避免节点异常导致消息丢失；</li> <li>exchange、queue、消息均设置为持久化，避免节点异常重启消息丢失；</li> <li>队列均设置为lazy queues，减少节点内存使用的波动，提高消息发送速率；</li></ul></li> <li>2、多集群配置
+<blockquote><p>A机房与B机房的RabbitMQ集群通过Federation插件将双集群组成联盟集群，互为热备；
+A机房与B机房内部有多个RabbitMQ集群，对用户组成一个透明的逻辑RabbitMQ集群，对用户透明；
+将一个逻辑队列拆分为多个物理队列分配到各自机房逻辑RabbitMQ集群，突破单个集群吞吐量，拥有逻辑RabbitMQ集群的吞吐量，通过消息负载到不同队列，三十个节点可以达到每秒百万级别；</p></blockquote></li> <li>3、案例
+<ul><li>机房断电</li></ul> <blockquote><p>通过sdk探活，切换到命名服务下发的热备集群地址，自动重置连接到新的集群，保证了服务的高可用；</p></blockquote> <ul><li>提现请求激增</li></ul> <blockquote><p>检测到队列长度告警增加逻辑集群中集群数量，下发地址到sdk，部分生产者消费者连接到新的集群，逻辑队列消息分发到新的集群，单集群队列长度减半；</p></blockquote></li></ul> <h3 id="目前遇到的问题"><a href="#目前遇到的问题" class="header-anchor">#</a> 目前遇到的问题</h3> <ul><li>1、创建的队列不是惰性(lazy)队列，当消息堆积时对内存消耗很大，延时激增，且平均消息发送速度减小；</li> <li>2、连接数过多，发送到同一个集群相同队列的消息按市场或者hash分发到不同集群；</li> <li>3、cpu被其他进程占用，采用绑定cpu方式防止cpu资源被其他进程耗尽；</li></ul> <p>参考链接：
+<a href="https://mp.weixin.qq.com/s/7s9-RsLWgiVvw28U51J0bA" target="_blank" rel="noopener noreferrer">vivo-RabbitMQ高可用架构实践<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> <a href="https://www.cnblogs.com/liyongsan/p/9640361.html" target="_blank" rel="noopener noreferrer">RabbitMQ脑裂问题解决方案调查<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> <a href="https://www.rabbitmq.com/lazy-queues.html" target="_blank" rel="noopener noreferrer">RabbitMq官网<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> <a href="https://honeypps.com/mq/rabbitmq-analysis-of-lazy-queue/" target="_blank" rel="noopener noreferrer">惰性队列介绍<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <footer class="page-edit" style="display:none;"><!----> <!----></footer> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-44bd5a18 data-v-44bd5a18><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-44bd5a18><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-44bd5a18></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-44bd5a18></path></svg></div></div></div>
+    <script src="/assets/js/app.89d7a7af.js" defer></script><script src="/assets/js/3.39c0dfdf.js" defer></script><script src="/assets/js/1.fc4f2573.js" defer></script><script src="/assets/js/29.c14786fa.js" defer></script>
+  </body>
+</html>

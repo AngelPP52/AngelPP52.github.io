@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Redis复制功能 | Shopee 供应链技术博客</title>
+    <meta name="generator" content="VuePress 1.4.1">
+    <link rel="icon" href="/favicon.ico">
+    <meta name="description" content="Share Our Knowledge.">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <link rel="preload" href="/assets/css/0.styles.65389751.css" as="style"><link rel="preload" href="/assets/js/app.89d7a7af.js" as="script"><link rel="preload" href="/assets/js/3.39c0dfdf.js" as="script"><link rel="preload" href="/assets/js/1.fc4f2573.js" as="script"><link rel="preload" href="/assets/js/13.a7db2e06.js" as="script"><link rel="prefetch" href="/assets/js/10.8f886ff6.js"><link rel="prefetch" href="/assets/js/11.42709e7b.js"><link rel="prefetch" href="/assets/js/12.51c95e33.js"><link rel="prefetch" href="/assets/js/14.b9fd5312.js"><link rel="prefetch" href="/assets/js/15.02f2a353.js"><link rel="prefetch" href="/assets/js/16.f2b3bba4.js"><link rel="prefetch" href="/assets/js/17.fa6f4a21.js"><link rel="prefetch" href="/assets/js/18.cc202cb1.js"><link rel="prefetch" href="/assets/js/19.b74d740a.js"><link rel="prefetch" href="/assets/js/20.4f1350b1.js"><link rel="prefetch" href="/assets/js/21.7011a4c9.js"><link rel="prefetch" href="/assets/js/22.71907870.js"><link rel="prefetch" href="/assets/js/23.7ea72b1e.js"><link rel="prefetch" href="/assets/js/24.156af4ed.js"><link rel="prefetch" href="/assets/js/25.705d13d1.js"><link rel="prefetch" href="/assets/js/26.90da6739.js"><link rel="prefetch" href="/assets/js/27.a1d9dc04.js"><link rel="prefetch" href="/assets/js/28.7b9ee58e.js"><link rel="prefetch" href="/assets/js/29.c14786fa.js"><link rel="prefetch" href="/assets/js/30.cc235e35.js"><link rel="prefetch" href="/assets/js/4.d90b791b.js"><link rel="prefetch" href="/assets/js/5.16307cd7.js"><link rel="prefetch" href="/assets/js/6.3a371881.js"><link rel="prefetch" href="/assets/js/7.40292f84.js"><link rel="prefetch" href="/assets/js/8.651698aa.js"><link rel="prefetch" href="/assets/js/9.fdd84905.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.65389751.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-19557b78><div data-v-19557b78><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-19557b78 data-v-19557b78><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-64685f0e data-v-19557b78 data-v-19557b78><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>Shopee 供应链技术博客</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>Shopee Supply Chain</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div class="hide" data-v-19557b78><header class="navbar" data-v-19557b78><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/shopee.png" alt="Shopee 供应链技术博客" class="logo"> <span class="site-name">Shopee 供应链技术博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/database/" class="nav-link"><i class="iconfont undefined"></i>
+  database
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CompilerTheory,Golang/" class="nav-link"><i class="iconfont undefined"></i>
+  CompilerTheory,Golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MVCC/" class="nav-link"><i class="iconfont undefined"></i>
+  MVCC
+</a></li><li class="dropdown-item"><!----> <a href="/categories/golang/" class="nav-link"><i class="iconfont undefined"></i>
+  golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spark/" class="nav-link"><i class="iconfont undefined"></i>
+  Spark
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CSS/" class="nav-link"><i class="iconfont undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/categories/efficiency/" class="nav-link"><i class="iconfont undefined"></i>
+  efficiency
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Performance/" class="nav-link"><i class="iconfont undefined"></i>
+  Performance
+</a></li><li class="dropdown-item"><!----> <a href="/categories/http/" class="nav-link"><i class="iconfont undefined"></i>
+  http
+</a></li><li class="dropdown-item"><!----> <a href="/categories/react/" class="nav-link"><i class="iconfont undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Middleware/" class="nav-link"><i class="iconfont undefined"></i>
+  Middleware
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Security/" class="nav-link"><i class="iconfont undefined"></i>
+  Security
+</a></li><li class="dropdown-item"><!----> <a href="/categories/git/" class="nav-link"><i class="iconfont undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Algorithm/" class="nav-link"><i class="iconfont undefined"></i>
+  Algorithm
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-19557b78></div> <aside class="sidebar" data-v-19557b78><div class="personal-info-wrapper" data-v-b038cec6><img src="/shopee.png" alt="author-avatar" class="personal-img" data-v-b038cec6> <h3 class="name" data-v-b038cec6>
+    Shopee Supply Chain
+  </h3> <div class="num" data-v-b038cec6><div data-v-b038cec6><h3 data-v-b038cec6>17</h3> <h6 data-v-b038cec6>Article</h6></div> <div data-v-b038cec6><h3 data-v-b038cec6>17</h3> <h6 data-v-b038cec6>Tag</h6></div></div> <hr data-v-b038cec6></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/categories/database/" class="nav-link"><i class="iconfont undefined"></i>
+  database
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CompilerTheory,Golang/" class="nav-link"><i class="iconfont undefined"></i>
+  CompilerTheory,Golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/MVCC/" class="nav-link"><i class="iconfont undefined"></i>
+  MVCC
+</a></li><li class="dropdown-item"><!----> <a href="/categories/golang/" class="nav-link"><i class="iconfont undefined"></i>
+  golang
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Spark/" class="nav-link"><i class="iconfont undefined"></i>
+  Spark
+</a></li><li class="dropdown-item"><!----> <a href="/categories/CSS/" class="nav-link"><i class="iconfont undefined"></i>
+  CSS
+</a></li><li class="dropdown-item"><!----> <a href="/categories/efficiency/" class="nav-link"><i class="iconfont undefined"></i>
+  efficiency
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Performance/" class="nav-link"><i class="iconfont undefined"></i>
+  Performance
+</a></li><li class="dropdown-item"><!----> <a href="/categories/http/" class="nav-link"><i class="iconfont undefined"></i>
+  http
+</a></li><li class="dropdown-item"><!----> <a href="/categories/react/" class="nav-link"><i class="iconfont undefined"></i>
+  react
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Middleware/" class="nav-link"><i class="iconfont undefined"></i>
+  Middleware
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Security/" class="nav-link"><i class="iconfont undefined"></i>
+  Security
+</a></li><li class="dropdown-item"><!----> <a href="/categories/git/" class="nav-link"><i class="iconfont undefined"></i>
+  git
+</a></li><li class="dropdown-item"><!----> <a href="/categories/Algorithm/" class="nav-link"><i class="iconfont undefined"></i>
+  Algorithm
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Redis复制功能</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/views/be/database/redis/redis_copy.html#旧版复制功能概述" class="sidebar-link">旧版复制功能概述</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#sync及其工作流程" class="sidebar-link">SYNC及其工作流程</a></li><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#命令传播" class="sidebar-link">命令传播</a></li></ul></li><li><a href="/views/be/database/redis/redis_copy.html#一次完整的旧版复制过程" class="sidebar-link">一次完整的旧版复制过程</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#前期准备工作" class="sidebar-link">前期准备工作</a></li><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#建立主从关系" class="sidebar-link">建立主从关系</a></li><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#存在的缺陷及解决方法" class="sidebar-link">存在的缺陷及解决方法</a></li></ul></li><li><a href="/views/be/database/redis/redis_copy.html#新版复制功能" class="sidebar-link">新版复制功能</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#psync的工作流程" class="sidebar-link">PSYNC的工作流程</a></li><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#psync中部分重同步的实现" class="sidebar-link">PSYNC中部分重同步的实现</a></li></ul></li><li><a href="/views/be/database/redis/redis_copy.html#一次完整的新版复制过程" class="sidebar-link">一次完整的新版复制过程</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/views/be/database/redis/redis_copy.html#复制功能在实践中遇到的问题，原因分析及解决办法" class="sidebar-link">复制功能在实践中遇到的问题，原因分析及解决办法</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#问题描述" class="sidebar-link">问题描述</a></li><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#问题复现" class="sidebar-link">问题复现</a></li><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#原因分析" class="sidebar-link">原因分析</a></li><li class="sidebar-sub-header"><a href="/views/be/database/redis/redis_copy.html#解决办法" class="sidebar-link">解决办法</a></li></ul></li><li><a href="/views/be/database/redis/redis_copy.html#最后" class="sidebar-link">最后</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-64685f0e data-v-19557b78><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>Redis复制功能</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>Shopee Supply Chain</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div data-v-19557b78><main class="page"><div class="page-title" style="display:none;"><h1>Redis复制功能</h1> <hr> <div data-v-484a899e><i class="iconfont reco-account" data-v-484a899e><span data-v-484a899e>xin.pan</span></i> <i class="iconfont reco-date" data-v-484a899e><span data-v-484a899e>2021-01-15</span></i> <!----> <i class="iconfont reco-tag tags" data-v-484a899e><span class="tag-item" data-v-484a899e>
+      redis
+    </span></i></div></div> <div class="theme-reco-content content__default" style="display:none;"><h2 id="旧版复制功能概述"><a href="#旧版复制功能概述" class="header-anchor">#</a> 旧版复制功能概述</h2> <p>复制是什么？</p> <ul><li>复制是指一个服务器去复制另一个服务器。复制可以使双方数据库保存相同的数据，也就是我们常说的“数据库状态一致”。其中被复制的服务器为主服务器，复制主服务器的为从服务器。</li> <li>其中旧版复制存在两个阶段，一个是SYNC阶段，另一个是命令传播阶段。</li></ul> <h3 id="sync及其工作流程"><a href="#sync及其工作流程" class="header-anchor">#</a> SYNC及其工作流程</h3> <p>SYNC是什么？</p> <ul><li>SYNC是指将从服务器数据库状态更新至主服务器当前所处的数据库状态的操作。</li></ul> <p>SYNC工作流程如下：
+<img src="/assets/img/sync.92c9ac74.png" alt=""></p> <ol><li>从服务器向主服务器发送SYNC命令；</li> <li>主服务器执行BGSAVE，后台生成RDB文件，并用缓冲区记录从现在开始执行的写命令；</li> <li>将RDB文件发送给从服务器，从服务器载入RDB文件；</li> <li>主服务器将记录在缓冲区的写命令发送给从服务器，从服务器执行命令。</li></ol> <h3 id="命令传播"><a href="#命令传播" class="header-anchor">#</a> 命令传播</h3> <p>命令传播什么？</p> <ul><li>命令传播是当主服务器的数据库状态被修改后，让主从服务器重新回到数据库状态一致。</li></ul> <p>命令传播工作流程如下：
+<img src="/assets/img/cmd-spread.02194cf0.png" alt=""></p> <p>当SYNC工作完成后，为了继续保持数据库状态一致，就需要命令传播。</p> <h2 id="一次完整的旧版复制过程"><a href="#一次完整的旧版复制过程" class="header-anchor">#</a> 一次完整的旧版复制过程</h2> <h3 id="前期准备工作"><a href="#前期准备工作" class="header-anchor">#</a> 前期准备工作</h3> <ul><li>1、下载镜像，并运行容器</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>docker pull redis:2.6 //下载redis镜像。
+docker run -itd --name redis-master -p 6379:6379 redis:2.6 //运行容器，启动主服务器
+docker run -itd --name redis-slave -p 6380:6379 redis:2.6 //运行容器，启动从服务器
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><ul><li>2、docker上redis-master、redis-slave的cli分别执行以下命令观察命令日志</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>redis-cli monitor //观察命令日志
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li>3、终端运行命令观察redis运行日志</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>docker logs -f redis-master //查看redis-master运行日志
+docker logs -f redis-slave //查看redis-master运行日志
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ul><li>4、数据初始化，在主服务器中执行以下命令</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>set key1 value1
+set key2 value2
+set key3 value3
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><ul><li>5、获取redis-master的IP地址</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>docker inspect redis-master //获取容器的元数据。需要查看redis服务的IP地址
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h3 id="建立主从关系"><a href="#建立主从关系" class="header-anchor">#</a> 建立主从关系</h3> <ul><li>1、redis-slave执行以下命令</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>slaveof 172.17.0.4 6379 //成为某个服务器的从服务器
+slaveof no one //不执行该命令，取消该服务器的从属性
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ul><li>2、从服务器运行情况
+<ul><li>从运行日志中我们可以看到执行了SYNC，并且从master中获取到59byte的数据，并将DB加载到内存中</li> <li>从命令日志中我们看到，不断有PING命令，这是心跳检测</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>[1] 16 Dec 06:10:54.626 * SLAVE OF 172.17.0.2:6379 enabled (user request)
+[1] 16 Dec 06:10:55.637 * Connecting to MASTER 172.17.0.2:6379
+[1] 16 Dec 06:10:55.639 * MASTER &lt;-&gt; SLAVE sync started
+[1] 16 Dec 06:10:55.639 * Non blocking connect for SYNC fired the event.
+[1] 16 Dec 06:10:55.639 * Master replied to PING, replication can continue...
+[1] 16 Dec 06:10:55.738 * MASTER &lt;-&gt; SLAVE sync: receiving 59 bytes from master
+[1] 16 Dec 06:10:55.738 * MASTER &lt;-&gt; SLAVE sync: Loading DB in memory
+[1] 16 Dec 06:10:55.739 * MASTER &lt;-&gt; SLAVE sync: Finished with success
+---
+1608099054.626460 [0 127.0.0.1:36920] &quot;slaveof&quot; &quot;172.17.0.2&quot; &quot;6379&quot;
+1608099060.799684 [0 172.17.0.2:6379] &quot;PING&quot;
+1608099070.926835 [0 172.17.0.2:6379] &quot;PING&quot;
+……
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><ul><li>3、主服务器运行情况
+<ul><li>从运行日志中，我们看出因为SYNC执行了BGSAVE，并且同步成功</li> <li>从命令日志中，我们看到除了SYNC命令之前有个REPLCONF，这是告诉主服务器从服务器的监听端口号</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>[1] 16 Dec 06:10:55.640 * Slave ask for synchronization
+[1] 16 Dec 06:10:55.640 * Starting BGSAVE for SYNC
+[1] 16 Dec 06:10:55.640 * Background saving started by pid 26
+[26] 16 Dec 06:10:55.642 * DB saved on disk
+[26] 16 Dec 06:10:55.643 * RDB: 0 MB of memory used by copy-on-write
+[1] 16 Dec 06:10:55.737 * Background saving terminated with success
+[1] 16 Dec 06:10:55.738 * Synchronization with slave succeeded
+---
+1608099055.639657 [0 172.17.0.3:34294] &quot;PING&quot;
+1608099055.640046 [0 172.17.0.3:34294] &quot;REPLCONF&quot; &quot;listening-port&quot; &quot;6379&quot;
+1608099055.640378 [0 172.17.0.3:34294] &quot;SYNC&quot;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><ul><li>4、建立主从关系后
+<ul><li>主服务器执行以下命令后，我们发现主服务器执行的命令传播到了从服务器</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>主服务器执行：
+set key4 value4
+set key5 value5
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>从服务器日志：
+1608100196.776754 [0 172.17.0.2:6379] &quot;set&quot; &quot;key4&quot; &quot;value4&quot;
+1608100199.368080 [0 172.17.0.2:6379] &quot;set&quot; &quot;key5&quot; &quot;value5&quot;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><ul><li>5、断开连接后重新连接
+<ul><li>根据日志，我们发现日志跟初次连接几乎一致，也就是说还是使用了RDB</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>docker network disconnect bridge redis-slave-26 //从服务器断开网络
+日志如下：
+[1] 16 Dec 12:11:16.934 * Connecting to MASTER 172.17.0.2:6379
+[1] 16 Dec 12:11:16.934 # Unable to connect to MASTER: Network is unreachable
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>主服务器执行：
+set key6 value6
+set key7 value7
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>docker network connect bridge redis-slave-26 //从服务器连接网络
+重新连接后，日志同初次连接
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h3 id="存在的缺陷及解决方法"><a href="#存在的缺陷及解决方法" class="header-anchor">#</a> 存在的缺陷及解决方法</h3> <p>在旧版复制一次完整的复制过程中，我们可以知道SYNC命令是一个非常耗费资源的操作：</p> <ul><li>BGSAVE命令需要生成RDB文件，耗费大量CPU、内存和磁盘I/O资源；</li> <li>将RDB文件发送给从服务器，又需要耗费大量的网络资源，同时，还影响命令响应时长；</li> <li>从服务器需要载入RDB文件，阻塞而无法处理命令请求。</li></ul> <p>我们知道，在断线重连时，只需要执行<code>set key6 value6</code>，<code>set key6 value6</code>也就是同步在网络断开期间缺失的数据即可。</p> <p>新版复制PSYNC，就做了这样的事情，从而减少耗费资源的操作。</p> <h2 id="新版复制功能"><a href="#新版复制功能" class="header-anchor">#</a> 新版复制功能</h2> <h3 id="psync的工作流程"><a href="#psync的工作流程" class="header-anchor">#</a> PSYNC的工作流程</h3> <p>相对于SYNC，PSYNC区分复制时的两种情况：</p> <ul><li>完整重同步。类似于SYNC</li> <li>部分重同步。用于处理断线后重新复制的情况。</li></ul> <p>其工作流程如下：</p> <ol><li>从服务器向主服务器发送PSYNC命令，是第一次复制发送<code>PSYNC ？-1</code>；否则发送<code>PSYNC &lt;runid&gt; &lt;offset&gt;</code></li> <li>如果主服务器接收到<code>PSYNC ？-1</code>，则进行步骤4；</li> <li>如果主服务器接收到<code>PSYNC &lt;runid&gt; &lt;offset&gt;</code>，判断是否可以进行部分重同步，可以则执行步骤5，不可以则执行步骤4；</li> <li>主服务器返回<code>+FULLRESYNC &lt;runid&gt; &lt;offset&gt;</code>，执行完整重同步；</li> <li>返回<code>+CONTINUE</code>，执行部分重同步，发送断线期间主服务器执行的写命令。</li></ol> <p>下图展示了<em>部分重同步</em> 的过程：
+<img src="/assets/img/psync1.f847730b.png" alt=""></p> <h3 id="psync中部分重同步的实现"><a href="#psync中部分重同步的实现" class="header-anchor">#</a> PSYNC中部分重同步的实现</h3> <p>在了解PSYNC的工作流程之后，你是否会存在下面的疑问？</p> <ul><li>从服务器如何知道是第一次复制？</li> <li>主服务器如何判断是否可以进行部分重同步？</li> <li>runid和offset是什么？</li></ul> <p>这就涉及到部分重同步的实现了。主要包含三部分：</p> <ul><li>主服务器的复制偏移量和从服务器的复制偏移量。</li> <li>主服务器的复制积压缓冲区。</li> <li>服务器的运行ID。</li></ul> <h4 id="复制偏移量"><a href="#复制偏移量" class="header-anchor">#</a> 复制偏移量</h4> <p>复制偏移量在复制过程中是如何维护的？</p> <ul><li>主服务器每次向从服务器传播N个字节数据时，主服务器的偏移量+N</li> <li>从服务器接收到N个字节数据时，从服务器的偏移量+N
+如下图所示：
+<img src="/assets/img/offset.8da166a6.png" alt=""></li></ul> <p>我们可以很容易的得出，复制偏移量是用来确认主从服务器是否处于一致状态。</p> <p>主从服务器的复制偏移量相同，那么主从则处于一致状态，反之则不一致。参照上图，假如一台slave断线，那么它的偏移量就不再是1000。</p> <h4 id="复制积压缓冲区"><a href="#复制积压缓冲区" class="header-anchor">#</a> 复制积压缓冲区</h4> <p>复制积压缓冲区是由主服务器维护的一个<em>固定长度先进先出队列</em>。如下图所示：
+<img src="/assets/img/FIFO.c3796bd3.png" alt=""></p> <p>当主服务器进行命令传播时，不仅将写命令发送给从服务器，还会将写命令入队到复制积压缓冲区。</p> <p>上文提到，主服务器需要判断是否可以进行部分重同步，从服务器会将自己的offset发送给从服务器：</p> <ul><li>如果offset之后的数据仍然在复制积压缓冲区中，那么进行部分重同步</li> <li>反之则进行完整重同步</li></ul> <p>一般来说复制积压缓冲区的大小设置为2 * 从服务器断线重连的平均时间 * 主服务器平均每秒产生的写命令数据量。
+这样设置可以尽可能的避免完整重同步。</p> <h4 id="服务器运行id"><a href="#服务器运行id" class="header-anchor">#</a> 服务器运行ID</h4> <p>每个Redis服务器在启动时都会生成自己的runid。并参与部分重同步：</p> <ul><li>初次复制时，主服务器将自己的runid发送给从服务器，从服务器保存起来。</li> <li>如果从服务器保存的runid和当前连接的主服务器的runid一致，那么可以进行部分重同步。</li> <li>反之，是连接的是新的主服务器，则进行完整重同步。</li></ul> <h2 id="一次完整的新版复制过程"><a href="#一次完整的新版复制过程" class="header-anchor">#</a> 一次完整的新版复制过程</h2> <p>前期准备工作参考旧版复制，差别在于，这次我们使用Redis 2.8版本。</p> <ul><li>1、redis-slave执行以下命令</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>slaveof 172.17.0.4 6379 //成为某个服务器的从服务器
+slaveof no one //不执行该命令，取消该服务器的从属性
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><ul><li>2、从服务器运行情况
+<ul><li>相比于旧版复制，我们可以看到日志里面告诉我们无法进行部分重同步，是因为第一次复制，然后开启了完整重同步</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>[1] 17 Dec 07:18:59.687 * SLAVE OF 172.17.0.4:6379 enabled (user request from 'id=3 addr=127.0.0.1:37520 fd=7 name= age=537 idle=0 flags=N db=0 sub=0 psub=0 multi=-1 qbuf=0 qbuf-free=32768 obl=0 oll=0 omem=0 events=r cmd=slaveof')
+[1] 17 Dec 07:18:59.775 * Connecting to MASTER 172.17.0.4:6379
+[1] 17 Dec 07:18:59.775 * MASTER &lt;-&gt; SLAVE sync started
+[1] 17 Dec 07:18:59.775 * Non blocking connect for SYNC fired the event.
+[1] 17 Dec 07:18:59.776 * Master replied to PING, replication can continue...
+[1] 17 Dec 07:18:59.776 * Partial resynchronization not possible (no cached master)
+[1] 17 Dec 07:18:59.778 * Full resync from master: 3ca26d6892dff2437685123d32ea28b047624cfc:1067
+[1] 17 Dec 07:18:59.878 * MASTER &lt;-&gt; SLAVE sync: receiving 59 bytes from master
+[1] 17 Dec 07:18:59.878 * MASTER &lt;-&gt; SLAVE sync: Flushing old data
+[1] 17 Dec 07:18:59.879 * MASTER &lt;-&gt; SLAVE sync: Loading DB in memory
+[1] 17 Dec 07:18:59.879 * MASTER &lt;-&gt; SLAVE sync: Finished with success
+---
+1608189541.194820 [0 172.17.0.4:6379] &quot;PING&quot;
+1608189551.338034 [0 172.17.0.4:6379] &quot;PING&quot;
+……
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><ul><li>3、主服务器运行情况
+<ul><li>它告诉我们进行了完整重同步，使用了SYNC。</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>[1] 17 Dec 07:18:59.777 * Slave 172.17.0.2:6379 asks for synchronization
+[1] 17 Dec 07:18:59.777 * Full resync requested by slave 172.17.0.2:6379
+[1] 17 Dec 07:18:59.777 * Starting BGSAVE for SYNC with target: disk
+[1] 17 Dec 07:18:59.777 * Background saving started by pid 30
+[30] 17 Dec 07:18:59.780 * DB saved on disk
+[30] 17 Dec 07:18:59.780 * RDB: 0 MB of memory used by copy-on-write
+[1] 17 Dec 07:18:59.877 * Background saving terminated with success
+[1] 17 Dec 07:18:59.878 * Synchronization with slave 172.17.0.2:6379 succeeded
+---
+1608189539.775970 [0 172.17.0.2:38814] &quot;PING&quot;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br></div></div><ul><li>4、断开连接后重新连接
+<ul><li>本次不再进行命令传播，直接尝试断线重连</li> <li>我们可以看到主从双方进行了部分重同步，并且offset=1992，这次同步了247byte的数据</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>docker network disconnect bridge redis-slave-26 //从服务器断开网络
+日志如下：
+[1] 17 Dec 07:31:02.671 # MASTER timeout: no data nor PING received...
+[1] 17 Dec 07:31:02.671 # Connection with master lost.
+[1] 17 Dec 07:31:02.671 * Caching the disconnected master state.
+[1] 17 Dec 07:31:02.672 * Connecting to MASTER 172.17.0.4:6379
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>主服务器执行：
+set key4 value5
+set key5 value5
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>docker network connect bridge redis-slave-26 //从服务器连接网络
+从服务器日志：
+[1] 17 Dec 07:31:53.465 * MASTER &lt;-&gt; SLAVE sync started
+[1] 17 Dec 07:31:53.466 * Non blocking connect for SYNC fired the event.
+[1] 17 Dec 07:31:53.466 * Master replied to PING, replication can continue...
+[1] 17 Dec 07:31:53.467 * Trying a partial resynchronization (request 3ca26d6892dff2437685123d32ea28b047624cfc:1992).
+[1] 17 Dec 07:31:53.468 * Successful partial resynchronization with master.
+[1] 17 Dec 07:31:53.468 * MASTER &lt;-&gt; SLAVE sync: Master accepted a Partial Resynchronization.
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br></div></div><div class="language- line-numbers-mode"><pre class="language-text"><code>主服务器日志：
+Disconnecting timedout slave: 172.17.0.2:6379
+[1] 17 Dec 07:31:07.132 # Connection with slave 172.17.0.2:6379 lost.
+[1] 17 Dec 07:31:53.468 * Slave 172.17.0.2:6379 asks for synchronization
+[1] 17 Dec 07:31:53.468 * Partial resynchronization request from 172.17.0.2:6379 accepted. Sending 247 bytes of backlog starting from offset 1992.
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><ul><li>5、主从服务器的info Replication
+<ul><li>使用info Replication可以查看主从相关信息，这里我们只关注offset(/slave_repl_offset)</li> <li>从服务器断线后，主服务器执行了写命令之后，我们可以看到主从的offset不一致</li> <li>断线重连后，我们可以发现主从服务器的offset已经一致了</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>role:slave
+master_host:172.17.0.4
+master_port:6379
+master_link_status:up
+master_last_io_seconds_ago:9
+master_sync_in_progress:0
+slave_repl_offset:2378
+slave_priority:100
+slave_read_only:1
+connected_slaves:0
+master_repl_offset:0
+repl_backlog_active:0
+repl_backlog_size:1048576
+repl_backlog_first_byte_offset:0
+repl_backlog_histlen:0
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h2 id="复制功能在实践中遇到的问题，原因分析及解决办法"><a href="#复制功能在实践中遇到的问题，原因分析及解决办法" class="header-anchor">#</a> 复制功能在实践中遇到的问题，原因分析及解决办法</h2> <h3 id="问题描述"><a href="#问题描述" class="header-anchor">#</a> 问题描述</h3> <p>我们知道服务器之间建立主从关系后，写命令是通过主服务器传播给从服务器的。那么过期键的删除呢？</p> <p>Redis过期键的删除策略由两部分组成，一个是惰性删除，一个是定期删除，只有真正执行删除命令时，过期键才会被删除，但是在从服务器中，一个键已经过期了，却能够获取到值。</p> <h3 id="问题复现"><a href="#问题复现" class="header-anchor">#</a> 问题复现</h3> <ul><li>1、参考一次完整的复制功能建立主从服务器。此时数据库状态如下：</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>127.0.0.1:6379&gt; keys *
+1) &quot;key3&quot;
+2) &quot;key2&quot;
+3) &quot;key1&quot;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><ul><li>2、主服务器中执行以下命令：</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>expire key1 10 //设置key1键的过期时间为10s
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li>3、在expire命令传播到从服务器之后，过期时间结束之前执行以下命令：
+<ul><li>断开了从服务器的网络连接，是因为过期键存在定期删除，这个定期任务默认是100ms执行一次，渐进随机的扫描键值对。我们的数据库中键值对很少，所以每100ms都会删除过期键，就达不到问题复现的条件了。</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>docker network disconnect bridge redis-slave-28 //断开从服务器的网络连接
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><ul><li>4、过期时间达到后，执行以下命令：</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>主服务器：
+127.0.0.1:6379&gt; keys *
+1) &quot;key3&quot;
+2) &quot;key2&quot;
+127.0.0.1:6379&gt; get key1
+(nil)
+从服务器：
+127.0.0.1:6379&gt; keys *
+1) &quot;key3&quot;
+2) &quot;key2&quot;
+127.0.0.1:6379&gt; get key1
+&quot;value1&quot;
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br></div></div><p>我们发现主服务器和从服务器用keys命令都没有key1键，但是get key1时，从服务器却能获取到值。</p> <h3 id="原因分析"><a href="#原因分析" class="header-anchor">#</a> 原因分析</h3> <p>显而易见，问题出在从服务器的get命令上。</p> <ul><li>我们先来看一下Redis中删除过期键的相关源码
+<ul><li>从代码中我们可以看出，在从服务器中redis是不会删除过期键的</li> <li>如果是主服务器，才会删除过期键，并将删除操作传播给从服务器</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>int expireIfNeeded(redisDb *db, robj *key) {
+    long long when = getExpire(db,key);
+
+    if (when &lt; 0) return 0; /* No expire for this key */
+
+    /* Don't expire anything while loading. It will be done later. */
+    if (server.loading) return 0;
+
+    /* If we are running in the context of a slave, return ASAP:
+     * the slave key expiration is controlled by the master that will
+     * send us synthesized DEL operations for expired keys.
+     *
+     * Still we try to return the right information to the caller, 
+     * that is, 0 if we think the key should be still valid, 1 if
+     * we think the key is expired at this time. */
+    if (server.masterhost != NULL) {
+        return mstime() &gt; when;
+    }
+
+    /* Return when this key has not expired */
+    if (mstime() &lt;= when) return 0;
+
+    /* Delete the key */
+    server.stat_expiredkeys++;
+    propagateExpire(db,key);
+    notifyKeyspaceEvent(REDIS_NOTIFY_EXPIRED,
+        &quot;expired&quot;,key,db-&gt;id);
+    return dbDelete(db,key);
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br></div></div><ul><li>再来看看get命令的相关源码
+<ul><li>我们看到，是先执行了expireIfNeeded方法，然后在lookupKey来获取值的。</li></ul></li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>robj *lookupKeyRead(redisDb *db, robj *key) {
+    robj *val;
+
+    expireIfNeeded(db,key);
+    val = lookupKey(db,key);
+    if (val == NULL)
+        server.stat_keyspace_misses++;
+    else
+        server.stat_keyspace_hits++;
+    return val;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br></div></div><ul><li>综上所述，在主服务器中，获取过期键，会删除过期键，并返回NULL，而在从服务器中，并不会删除，反而返回了过期的值。</li></ul> <h3 id="解决办法"><a href="#解决办法" class="header-anchor">#</a> 解决办法</h3> <p>上述问题，是Redis自身代码问题所导致的，存在有两种解决办法：</p> <ul><li>1、可以理解为这是过期键的删除操作传播不及时导致的，可以不断做一个扫库操作。
+<ul><li>显然，这样会影响redis的性能，同时仍然存在一定时间的延迟。</li></ul></li> <li>2、升级Redis版本到3.2以上。</li></ul> <p>我们来看看Redis3.2相关源码：</p> <ul><li>可以看到，这次lookupKeyReadWithFlags中对过期键进行了判断。如果调用者不是主服务器，并且命令是只读命令，那么返回NULL</li></ul> <div class="language- line-numbers-mode"><pre class="language-text"><code>/* Like lookupKeyReadWithFlags(), but does not use any flag, which is the
+ * common case. */
+robj *lookupKeyRead(redisDb *db, robj *key) {
+    return lookupKeyReadWithFlags(db,key,LOOKUP_NONE);
+}
+
+robj *lookupKeyReadWithFlags(redisDb *db, robj *key, int flags) {
+    robj *val;
+
+    if (expireIfNeeded(db,key) == 1) {
+        /* Key expired. If we are in the context of a master, expireIfNeeded()
+         * returns 0 only when the key does not exist at all, so it's save
+         * to return NULL ASAP. */
+        if (server.masterhost == NULL) return NULL;
+
+        /* However if we are in the context of a slave, expireIfNeeded() will
+         * not really try to expire the key, it only returns information
+         * about the &quot;logical&quot; status of the key: key expiring is up to the
+         * master in order to have a consistent view of master's data set.
+         *
+         * However, if the command caller is not the master, and as additional
+         * safety measure, the command invoked is a read-only command, we can
+         * safely return NULL here, and provide a more consistent behavior
+         * to clients accessign expired values in a read-only fashion, that
+         * will say the key as non exisitng.
+         *
+         * Notably this covers GETs when slaves are used to scale reads. */
+        if (server.current_client &amp;&amp;
+            server.current_client != server.master &amp;&amp;
+            server.current_client-&gt;cmd &amp;&amp;
+            server.current_client-&gt;cmd-&gt;flags &amp; CMD_READONLY)
+        {
+            return NULL;
+        }
+    }
+    val = lookupKey(db,key,flags);
+    if (val == NULL)
+        server.stat_keyspace_misses++;
+    else
+        server.stat_keyspace_hits++;
+    return val;
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br></div></div><h2 id="最后"><a href="#最后" class="header-anchor">#</a> 最后</h2> <p>我不能保证每一个地方都是正确的，但是每一句话都经过了认真的推敲，仔细的斟酌。</p> <p>本人才疏学浅，如有遗漏或是错误，还望告知。</p></div> <footer class="page-edit" style="display:none;"><!----> <!----></footer> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-44bd5a18 data-v-44bd5a18><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-44bd5a18><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-44bd5a18></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-44bd5a18></path></svg></div></div></div>
+    <script src="/assets/js/app.89d7a7af.js" defer></script><script src="/assets/js/3.39c0dfdf.js" defer></script><script src="/assets/js/1.fc4f2573.js" defer></script><script src="/assets/js/13.a7db2e06.js" defer></script>
+  </body>
+</html>
